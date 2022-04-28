@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\Users\LoginController;
 
@@ -39,6 +41,14 @@ Route::middleware(['auth'])->group(function () {
             Route::post('edit/{menu}', [MenuController::class, 'update']);
             Route::DELETE('destroy', [MenuController::class, 'destroy']);
         });
+
+        #Product
+        Route::prefix('products')->group(function () {
+            Route::get('add', [ProductController::class, 'create']);
+        });
+
+        #Upload
+            Route::post('upload/services', [UploadController::class, 'store']);
     });
 });
 
