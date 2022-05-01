@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Menu\MenuService;
 use App\Http\Services\Product\ProductAdminService;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,7 +19,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        //
+        return view('admin.products.list', [
+           'title' => 'Danh sách danh mục',
+           'products' => $this->productService->get()
+        ]);
     }
 
 
@@ -39,25 +43,39 @@ class ProductController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return view('admin.products.edit', [
+           'title' => 'Sửa sản phẩm',
+            'product' => $product,
+            'menus' => $this->productService->getMenu()
+
+        ]);
     }
 
 
-    public function edit($id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $result = $this->productService->update($request, $product);
+
+        if ($result) {
+            return redirect('/admin/products/list');
+        }
+
+        return redirect()->back();
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $result =$this->productService->delete($request);
+
+        if ($result) {
+            return response()->json([
+               'error' => false,
+                'message' => 'Xóa sản phẩm thành công'
+            ]);
+        }
+        return  response()->json(['error' => true]);
     }
 }

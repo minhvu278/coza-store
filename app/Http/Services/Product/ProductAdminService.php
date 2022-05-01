@@ -46,4 +46,38 @@ class ProductAdminService
         }
         return true;
     }
+
+    public function get()
+    {
+        return Product::with('menu')
+        ->orderByDesc('id')->paginate(15);
+    }
+
+    public function update(\Illuminate\Http\Request $request, Product $product)
+    {
+        $isValidPrice = $this->isValidPrice($request);
+        if ($isValidPrice == false) return false;
+
+        try {
+            $product->fill($request->input());
+            $product->save();
+
+            Session::flash('success', 'Cập nhật thành công');
+        } catch (\Exception $err) {
+            Session::flash('error', 'Có lỗi vui lòng thử lại');
+            \Log::info($err->getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public function delete(\Illuminate\Http\Request $request)
+    {
+        $product = Product::where('id', $request->input('id'))->first();
+        if ($product) {
+            $product->delete();
+            return true;
+        }
+        return false;
+    }
 }

@@ -19,4 +19,8 @@ class Product extends Model
         'content',
         'active'
     ];
+
+    public function menu() {
+        return $this->hasOne(Menu::class, 'id', 'menu_id');
+    }
 }
