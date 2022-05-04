@@ -58,3 +58,4 @@ Route::get('/', [\App\Http\Controllers\User\MainController::class, 'index']);
 Route::post('/services/load-product', [\App\Http\Controllers\User\MainController::class, 'loadProduct']);
 
 Route::get('/danh-muc/{id}-{slug}.html', [\App\Http\Controllers\User\MenuController::class, 'index']);
+Route::get('/san-pham/{id}-{slug}.html', [\App\Http\Controllers\User\ProductController::class, 'index']);
