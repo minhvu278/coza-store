@@ -59,3 +59,10 @@ Route::post('/services/load-product', [\App\Http\Controllers\User\MainController
 
 Route::get('/danh-muc/{id}-{slug}.html', [\App\Http\Controllers\User\MenuController::class, 'index']);
 Route::get('/san-pham/{id}-{slug}.html', [\App\Http\Controllers\User\ProductController::class, 'index']);
+
+#Cart
+Route::post('add-cart', [\App\Http\Controllers\User\CartController::class, 'index']);
+Route::get('carts', [\App\Http\Controllers\User\CartController::class, 'show']);
+Route::post('update-cart', [\App\Http\Controllers\User\CartController::class, 'update']);
+Route::get('carts/delete/{id}', [\App\Http\Controllers\User\CartController::class, 'remove']);
+Route::post('carts', [\App\Http\Controllers\User\CartController::class, 'addCart']);
