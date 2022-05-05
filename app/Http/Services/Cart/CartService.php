@@ -4,6 +4,7 @@
 namespace App\Http\Services\Cart;
 
 
+use App\Jobs\SendMail;
 use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\Product;
@@ -93,6 +94,9 @@ class CartService
 
             DB::commit();
             Session::flash('success', 'Đặt hàng thành công');
+
+            #Queue
+            SendMail::dispatch($request->input('email'))->delay(now()->addSecond(2));
             Session::forget('carts');
         }catch (\Exception $err) {
             DB::rollBack();
