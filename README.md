@@ -55,4 +55,5 @@ php artisan serve
 | ---  |--  |
 
 ## 🎉 Resources <a name = "resources"></a>
-// Updating
+- [Khoa Pham laravel training course]()
+- [Laravel documentation]()
